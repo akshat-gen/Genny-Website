@@ -30,12 +30,18 @@ app.post('/api/demo-request', async (req, res) => {
 
 app.use('/api', (_req, res) => res.status(404).json({ ok: false, error: 'Not found' }));
 
-// In production, serve the built React app from the same origin.
-if (fs.existsSync(CLIENT_DIST)) {
+// Self-hosted production (`npm start`): serve the built React app from the same origin.
+// On Vercel the client is its own service and express.static is ignored.
+if (!process.env.VERCEL && fs.existsSync(CLIENT_DIST)) {
   app.use(express.static(CLIENT_DIST, { maxAge: '1h', index: false }));
   app.get('*', (_req, res) => res.sendFile(path.join(CLIENT_DIST, 'index.html')));
 }
 
-app.listen(PORT, () => {
-  console.log(`Genessence API listening on http://localhost:${PORT}`);
-});
+// On Vercel the exported app runs as a function; locally it listens on PORT.
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Genessence API listening on http://localhost:${PORT}`);
+  });
+}
+
+export default app;

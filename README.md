@@ -16,10 +16,15 @@ npm start        # Express serves client/dist + API on http://localhost:4000
 
 ## Deploy (Vercel)
 
-`vercel.json` builds the client and serves `client/dist` as static files. The API routes
-are Vercel serverless functions in `api/` (`/api/demo-request`, `/api/health`). They reuse
-`server/src/validate.js`, so validation stays identical to the Express server. Import the
-repo in Vercel with the root directory left as the repo root; no settings need changing.
+The repo deploys as one Vercel project with two [services](https://vercel.com/docs/services), defined in `vercel.json`:
+
+| Service | Root | Framework | Public path |
+| --- | --- | --- | --- |
+| `client` | `client/` | Vite | `/(.*)`, with `/products/:slug` falling back to `index.html` |
+| `server` | `server/` | Express (`src/index.js`, default export) | `/api/(.*)`, receives the full `/api/...` path |
+
+The browser calls the API on the same domain (`/api/demo-request`), so no service bindings are needed.
+Run both together locally with `vercel dev` (or `npm run dev` for the Vite + Express setup).
 
 ## Where things live
 
@@ -35,6 +40,7 @@ repo in Vercel with the root directory left as the repo root; no settings need c
 | `motion` flag + reduced-motion check | `client/src/lib/motion.ts` (`MOTION`) |
 | Demo form validation + `submitDemoRequest(data)` | `client/src/lib/demoForm.ts` |
 | Server-side validation | `server/src/validate.js` |
+| API (Express app, exported for Vercel) | `server/src/index.js` |
 | SEO: title, description, OG, favicon, robots, sitemap | `client/index.html`, `client/public/` |
 
 ## TODO
