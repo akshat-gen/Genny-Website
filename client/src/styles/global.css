@@ -951,7 +951,7 @@ a{color:#00677f}a:hover{color:#0B2545}
 .spot-i:hover{background:var(--grey);color:var(--navy)}
 .spot-i.on{background:var(--lcyan);color:var(--navy);font-weight:600}
 .spot-i.on .ms{background:var(--navy);color:var(--cyan2)}
-.spot-bar{position:absolute;left:12px;right:12px;bottom:3px;height:2px;border-radius:2px;background:rgba(0,169,206,.18);overflow:hidden}
+.spot-bar{position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:0 0 6px 6px;background:rgba(0,169,206,.18);overflow:hidden}
 .spot-show{display:flex;flex-direction:column;gap:6px;padding:32px;border-radius:12px;background:var(--grey);border:1px solid var(--line);background-image:linear-gradient(to right,rgba(0,16,38,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,16,38,.035) 1px,transparent 1px);background-size:24px 24px}
 .spot-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .spot-k{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
