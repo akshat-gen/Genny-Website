@@ -17,7 +17,8 @@ function config() {
   const clientSecret = env.MS_CLIENT_SECRET || '';
   const internalTo = (env.DEMO_INTERNAL_TO || '').split(',').map((s) => s.trim()).filter(Boolean);
   const marketing = (env.DEMO_MARKETING_EMAIL || '').trim();
-  const missing = Object.entries({ MAIL_FROM: from, MS_TENANT_ID: tenant, MS_CLIENT_ID: clientId, MS_CLIENT_SECRET: clientSecret, DEMO_INTERNAL_TO: internalTo.length, DEMO_MARKETING_EMAIL: marketing })
+  // DEMO_MARKETING_EMAIL is optional.
+  const missing = Object.entries({ MAIL_FROM: from, MS_TENANT_ID: tenant, MS_CLIENT_ID: clientId, MS_CLIENT_SECRET: clientSecret, DEMO_INTERNAL_TO: internalTo.length })
     .filter(([, v]) => !v)
     .map(([k]) => k);
   return { from, tenant, clientId, clientSecret, internalTo, marketing, missing };
@@ -135,7 +136,9 @@ export async function sendDemoRequestEmails(data, now = new Date()) {
 
   const hello = welcome(data);
   try {
-    await deliver(cfg, { to: data.email, bcc: cfg.marketing, replyTo: cfg.marketing, ...hello });
+    // Without a marketing inbox, replies go to the sending mailbox and no BCC is added.
+    const extra = cfg.marketing ? { bcc: cfg.marketing, replyTo: cfg.marketing } : { replyTo: cfg.from };
+    await deliver(cfg, { to: data.email, ...extra, ...hello });
   } catch (err) {
     console.error('[mailer] welcome email failed:', err?.message || err);
   }

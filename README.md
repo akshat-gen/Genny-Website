@@ -31,7 +31,7 @@ Run both together locally with `vercel dev` (or `npm run dev` for the Vite + Exp
 `POST /api/demo-request` (Express, `server/src/index.js`) validates the request, applies a honeypot (`website` field) and a per-IP rate limit of 5 requests per 10 minutes, then calls `sendDemoRequestEmails()` in **`server/src/mailer.js`**, the only module that knows how mail is sent. It sends:
 
 1. **Internal alert** to `DEMO_INTERNAL_TO`: "New demo request — {company}", with name, email, company, spend and time (IST). Reply-To is the visitor.
-2. **Welcome email** to the visitor (HTML and plain text), BCC and Reply-To `DEMO_MARKETING_EMAIL`.
+2. **Welcome email** to the visitor (HTML and plain text). If `DEMO_MARKETING_EMAIL` is set it is BCC'd and used as Reply-To; otherwise replies go to `MAIL_FROM`.
 
 Both are sent from `MAIL_FROM` with the display name "Genessence". `mailer.js` builds each message with nodemailer (MIME) and sends it through **Microsoft Graph** `POST /users/{MAIL_FROM}/sendMail`, using an app-only OAuth token (client credentials). No mailbox password or SMTP AUTH is involved, so this is not affected by Microsoft retiring Basic Auth for SMTP (off by default from the end of December 2026).
 
@@ -46,7 +46,7 @@ Set these in `server/.env.local` for local development (see `server/.env.example
 | `MS_CLIENT_ID` | Application (client) ID of the app registration |
 | `MS_CLIENT_SECRET` | Client secret **value** of the app registration |
 | `DEMO_INTERNAL_TO` | Comma-separated internal recipients of the alert |
-| `DEMO_MARKETING_EMAIL` | Marketing inbox, BCC'd on welcome emails and used as their Reply-To |
+| `DEMO_MARKETING_EMAIL` | *Optional.* Marketing inbox, BCC'd on welcome emails and used as their Reply-To. If empty, no BCC is sent and replies go to `MAIL_FROM` |
 
 ### Microsoft 365 / Entra setup (admin, once)
 
