@@ -992,3 +992,5 @@ a{color:#00677f}a:hover{color:#0B2545}
 .gx .btn-p .spinner{border-color:rgba(255,255,255,.3);border-top-color:#fff}
 .gx .dark .btn-p,.gx .tc .btn-p{background:#fff;color:var(--navy)}
 .gx .btn-p:disabled{opacity:.75;cursor:progress}
+.hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.ferr-form{justify-content:center;margin:0 0 12px;padding:8px 12px;border-radius:4px;background:rgba(192,57,43,.08);font-size:13px}

@@ -3,6 +3,8 @@ export interface DemoRequest {
   email: string;
   company: string;
   spend: string;
+  /** Honeypot: hidden from people, left empty by them; bots tend to fill it. */
+  website?: string;
 }
 
 export type DemoErrors = Partial<Record<'name' | 'email' | 'company', string>>;
@@ -25,11 +27,7 @@ export class DemoRequestError extends Error {
   }
 }
 
-/**
- * Sends a demo request to the Node API (POST /api/demo-request).
- * TODO(demo-form): the API currently only logs the request. Wire its
- * destination (HubSpot, Formspree, email) in server/src/index.js.
- */
+/** Sends a demo request to the API (POST /api/demo-request), which emails it via server/src/mailer.js. */
 export async function submitDemoRequest(data: DemoRequest): Promise<void> {
   const res = await fetch('/api/demo-request', {
     method: 'POST',
@@ -38,6 +36,9 @@ export async function submitDemoRequest(data: DemoRequest): Promise<void> {
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok || !body.ok) {
-    throw new DemoRequestError(body.error || 'Something went wrong. Please try again.', body.errors);
+    const message = res.status === 429
+      ? 'Too many requests from this network. Please try again in a few minutes.'
+      : 'We couldn’t send your request. Please try again in a moment.';
+    throw new DemoRequestError(message, body.errors);
   }
 }

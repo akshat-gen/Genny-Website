@@ -14,7 +14,7 @@ export default function DemoCta() {
     if (form === 'sending') return;
     const f = new FormData(e.currentTarget);
     const val = (k: string) => String(f.get(k) ?? '').trim();
-    const data = { name: val('name'), email: val('email'), company: val('company'), spend: val('spend') };
+    const data = { name: val('name'), email: val('email'), company: val('company'), spend: val('spend'), website: val('website') };
 
     const er = validateDemoRequest(data);
     setFailure('');
@@ -73,6 +73,10 @@ export default function DemoCta() {
             </div>
           ) : (
             <form onSubmit={submit} noValidate>
+              <div className="hp" aria-hidden="true">
+                <label htmlFor="demo-website">Website</label>
+                <input id="demo-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
               <div className="frow">
                 {field('name', 'Full Name', 'text', 'Sarah Jenkins', 'name')}
                 {field('email', 'Work Email', 'email', 's.jenkins@company.com', 'email')}
@@ -86,12 +90,12 @@ export default function DemoCta() {
                   </select>
                 </div>
               </div>
+              {failure && <div className="ferr ferr-form" role="alert"><span className="ms" aria-hidden="true">error</span>{failure}</div>}
               <button type="submit" className="btn btn-p sub" disabled={sending}>
                 {sending
                   ? <><span className="spinner" /><span>Scheduling…</span></>
                   : <><span>Schedule Architecture Review</span><span className="ms" aria-hidden="true">calendar_month</span></>}
               </button>
-              {failure && <div className="ferr" role="alert" style={{ justifyContent: 'center', marginTop: 10 }}><span className="ms" aria-hidden="true">error</span>{failure}</div>}
               <p className="fnote">No credit card required. Defensible modeling using your test BOM under reciprocal NDA.</p>
             </form>
           )}

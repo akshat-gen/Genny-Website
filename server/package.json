@@ -5,10 +5,11 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "dev": "node --watch src/index.js",
-    "start": "NODE_ENV=production node src/index.js"
+    "dev": "node --env-file-if-exists=.env.local --watch src/index.js",
+    "start": "NODE_ENV=production node --env-file-if-exists=.env.local src/index.js"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16"
   }
 }
