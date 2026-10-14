@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import { BASE, SAMPLE, SUITE, money } from '../lib/content';
+import { BASE, SAMPLE, SAMPLE_GAP, SUITE, money } from '../lib/content';
 
 const TODAY_STEPS = [
   { short: 'Inbox', icon: 'mail' },
@@ -10,14 +10,17 @@ const TODAY_STEPS = [
   { short: 'Surprise', icon: 'warning' }
 ];
 
-/** One row of the scorecard: label, value, and an optional bar (0–100). */
-function Metric({ k, v, bar, note, text }: { k: string; v: string; bar?: number; note?: string; text?: boolean }) {
+type Kind = 'price' | 'time' | 'var';
+const KIND_ICON: Record<Kind, string> = { price: 'payments', time: 'schedule', var: 'policy' };
+
+/** One row of the scorecard. Price and time, the two value points, are colour-coded. */
+function Metric({ kind, k, v, bar, note, text, delta }: { kind: Kind; k: string; v: string; bar?: number; note?: string; text?: boolean; delta?: string }) {
   return (
-    <div className="sc-m">
-      <span className="sc-k">{k}</span>
+    <div className={'sc-m ' + kind}>
+      <span className="sc-k"><span className="ms" aria-hidden="true">{KIND_ICON[kind]}</span>{k}</span>
       <b className={'sc-v ' + (text ? 'txt' : 'num')}>{v}</b>
       {bar !== undefined && <span className="sc-tr2"><span className="sc-f" style={{ width: bar + '%' }} /></span>}
-      {note && <span className="sc-n">{note}</span>}
+      {(note || delta) && <span className="sc-n">{delta && <em className="sc-d">{delta}</em>}{note}</span>}
     </div>
   );
 }
@@ -50,9 +53,9 @@ export default function QuoteJourney({ seen, still }: { seen: boolean; still: bo
           <div className="cell rv d3" data-rv="gap">
             <article className="scd">
               <div className="scd-h"><span className="col-t"><span className="dot" />Without Genessence</span></div>
-              <Metric k="Price paid" v={money(SAMPLE.quote)} bar={100} />
-              <Metric k="Time to decide" v="3 weeks" bar={100} />
-              <Metric k="Variance found" v="After the PO" note="60–90 days later" text />
+              <Metric kind="price" k="Price paid" v={money(SAMPLE.quote)} bar={100} />
+              <Metric kind="time" k="Time to decide" v="3 weeks" bar={100} />
+              <Metric kind="var" k="Variance found" v="After the PO" note="60–90 days later" text />
               <ol className="scd-steps">
                 {TODAY_STEPS.map((st) => (
                   <li key={st.short}><span className="ms" aria-hidden="true">{st.icon}</span>{st.short}</li>
@@ -65,9 +68,9 @@ export default function QuoteJourney({ seen, still }: { seen: boolean; still: bo
           <div className="cell rv d4" data-rv="gap">
             <article className="scd on">
               <div className="scd-h"><span className="col-t"><span className="dot" />With Genessence</span><span className="scd-chip">{cur.name}</span></div>
-              <Metric k="Target price" v={money(BASE)} bar={(BASE / SAMPLE.quote) * 100} />
-              <Metric k="Time to decide" v="< 4 hours" bar={3} />
-              <Metric k="Variance found" v="Before the PO" note="Line by line" text />
+              <Metric kind="price" k="Target price" v={money(BASE)} bar={(BASE / SAMPLE.quote) * 100} delta={`${Math.round((SAMPLE_GAP / SAMPLE.quote) * 100)}% lower`} />
+              <Metric kind="time" k="Time to decide" v="< 4 hours" bar={3} delta="Weeks to hours" />
+              <Metric kind="var" k="Variance found" v="Before the PO" note="Line by line" text />
               <ol className="scd-steps" style={{ '--jf': (jc / (cur.steps.length - 1)) * 80 + '%' } as CSSProperties}>
                 {cur.steps.map((st, i) => (
                   <li key={st.n} className={i < jc ? 'past' : i === jc ? 'cur' : ''} title={st.t}>

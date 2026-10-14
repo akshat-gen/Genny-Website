@@ -28,11 +28,11 @@ export default function Hero({ still }: { still: boolean }) {
         <div className="hero-g">
           <div>
             <h1 className="h1">
-              <span className="ln"><span className="ln-i">The Intelligence Layer</span></span>
-              <span className="ln"><span className="ln-i">for Manufacturing</span></span>
-              <span className="ln"><span className="ln-i"><span className="acc">Procurement.</span></span></span>
+              <span className="ln"><span className="ln-i">Every sourcing</span></span>
+              <span className="ln"><span className="ln-i">decision,</span></span>
+              <span className="ln"><span className="ln-i"><span className="acc">in one place.</span></span></span>
             </h1>
-            <p className="hero-p rv d3" data-rv="hero">Turn fragmented procurement data into sourcing decisions you can defend. Transform legacy ERP dumps and supplier quotes into parametric should-cost benchmarks.</p>
+            <p className="hero-p rv d3" data-rv="hero">Sourcing360 connects your suppliers, quotes and spend, so you can see what to buy, from whom, and at what price.</p>
             <div className="hero-cta rv d4" data-rv="hero">
               <a className="btn btn-p" href="#demo">Request a Demo<span className="ms" aria-hidden="true">arrow_forward</span></a>
               <a className="btn btn-g" href="#platform">Explore the Platform</a>

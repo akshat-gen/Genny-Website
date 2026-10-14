@@ -94,7 +94,7 @@ export default function DemoCta() {
               <button type="submit" className="btn btn-p sub" disabled={sending}>
                 {sending
                   ? <><span className="spinner" /><span>Scheduling…</span></>
-                  : <><span>Schedule Architecture Review</span><span className="ms" aria-hidden="true">calendar_month</span></>}
+                  : <><span>Book a Demo Call</span><span className="ms" aria-hidden="true">calendar_month</span></>}
               </button>
               <p className="fnote">No credit card required. Defensible modeling using your test BOM under reciprocal NDA.</p>
             </form>

@@ -994,3 +994,144 @@ a{color:#00677f}a:hover{color:#0B2545}
 .gx .btn-p:disabled{opacity:.75;cursor:progress}
 .hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 .ferr-form{justify-content:center;margin:0 0 12px;padding:8px 12px;border-radius:4px;background:rgba(192,57,43,.08);font-size:13px}
+
+/* ---------- quote journey: colour-coded value points (price = green, time = blue) ---------- */
+.sc-m.price{--vc:#2E8B57;--vc-soft:#a9d4bb}
+.sc-m.time{--vc:#0077b6;--vc-soft:#a8cfe6}
+.sc-m.var{--vc:var(--slate);--vc-soft:#c4ccd6}
+.sc-k{display:inline-flex;align-items:center;gap:6px}
+.sc-k .ms{font-size:18px;color:var(--vc)}
+.sc-m.price .sc-k,.sc-m.time .sc-k{color:var(--vc)}
+.sc-m.price,.sc-m.time{padding:10px 12px;margin:0 -12px;border-radius:6px;background:color-mix(in srgb,var(--vc) 6%,transparent)}
+.scd .sc-m.price .sc-f,.scd .sc-m.time .sc-f{background:var(--vc-soft)}
+.scd.on .sc-m.price .sc-f,.scd.on .sc-m.time .sc-f{background:var(--vc)}
+.scd:not(.on) .sc-m.price .sc-v,.scd:not(.on) .sc-m.time .sc-v{color:var(--slate)}
+.scd.on .sc-m.price .sc-v,.scd.on .sc-m.time .sc-v{color:var(--vc)}
+.sc-d{display:inline-flex;font-style:normal;font-weight:700;font-size:12px;color:#fff;background:var(--vc);padding:2px 8px;border-radius:9999px;margin-right:8px}
+
+/* ---------- architecture: stepper with scenes ---------- */
+.stp-row{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:24px}
+.stp-row::before,.stp-row::after{content:"";position:absolute;left:10%;top:23px;height:2px;border-radius:2px}
+.stp-row::before{right:10%;background:var(--dline)}
+.stp-row::after{width:calc(var(--sf) * .8);background:var(--cyan2);transition:width .6s var(--ease)}
+.stp-i{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 4px;color:var(--dm)}
+.stp-i .ms{width:48px;height:48px;border-radius:50%;background:var(--ink);border:1px solid var(--dline);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--dm);transition:background-color .35s,color .35s,border-color .35s,transform .35s var(--ease),box-shadow .35s}
+.stp-n{font-size:15px;font-weight:600;transition:color .35s}
+.stp-i.done .ms{border-color:rgba(90,216,255,.5);color:var(--cyan2)}
+.stp-i.on .ms{background:var(--cyan2);border-color:var(--cyan2);color:var(--ink);transform:scale(1.08);box-shadow:0 0 0 6px rgba(90,216,255,.15)}
+.stp-i.on .stp-n{color:#fff}
+.stp-i:hover .stp-n{color:#fff}
+.stp-panel{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center;padding:32px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--dline);min-height:300px}
+.stp-scene{display:flex;align-items:center;justify-content:center;min-height:236px}
+.stp-k{font-size:12px;color:var(--cyan2)}
+.stp-t{font-family:Geist,Inter,sans-serif;font-size:44px;line-height:50px;font-weight:700;letter-spacing:-.03em;color:#fff;margin-top:6px}
+.stp-p{font-size:18px;line-height:27px;color:#c9d4e6;margin-top:8px;max-width:360px}
+.stp-bar{display:block;height:2px;margin-top:22px;max-width:220px;border-radius:2px;background:var(--dline);overflow:hidden}
+.stp-bar span{display:block;height:100%;background:var(--cyan2);animation:runA linear forwards}
+
+/* scenes */
+.scn{position:relative;width:100%;max-width:440px;color:#eaf1ff;font-size:13px}
+.scn .ms{font-size:18px}
+/* 1 data: four sources glide into the hub */
+.scn-data{height:220px}
+.scn-src{position:absolute;left:50%;top:50%;display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:9999px;background:rgba(255,255,255,.06);border:1px solid var(--dline);white-space:nowrap;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty)));animation:scnin 1.6s var(--ease) both}
+.scn-src .ms{color:var(--cyan2)}
+@keyframes scnin{0%{transform:translate(calc(-50% + var(--tx) * 1.4),calc(-50% + var(--ty) * 1.4));opacity:0}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty)));opacity:1}}
+.scn-hub{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:16px;background:var(--cyan2);color:var(--ink);display:flex;align-items:center;justify-content:center;animation:scnhub 1.6s .9s ease-out both}
+.scn-hub .ms{font-size:30px}
+.scn-data::before{content:"";position:absolute;inset:30px 60px;border:1px dashed rgba(90,216,255,.3);border-radius:20px;animation:scnfade .8s .5s both}
+@keyframes scnhub{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.1);opacity:1}100%{transform:scale(1);box-shadow:0 0 0 10px rgba(90,216,255,.12)}}
+@keyframes scnfade{from{opacity:0}to{opacity:1}}
+/* 2 analyse: cost bars build up */
+.scn-analyse{display:flex;flex-direction:column;gap:12px}
+.scn-row{display:grid;grid-template-columns:80px minmax(0,1fr) 64px;gap:12px;align-items:center}
+.scn-row>span:first-child{color:var(--dm)}
+.scn-row b{text-align:right;font-weight:600;animation:scnfade .4s both}
+.scn-tr{display:block;height:12px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden}
+.scn-tr span{display:block;height:100%;border-radius:3px;transform-origin:0 50%;animation:scngrow .7s var(--ease) both}
+@keyframes scngrow{from{transform:scaleX(0)}to{transform:none}}
+/* 3 decide: target lands inside the corridor */
+.scn-decide{padding:40px 8px 0}
+.scn-scale{position:relative;height:10px;border-radius:5px;background:rgba(255,255,255,.08)}
+.scn-band{position:absolute;top:-6px;bottom:-6px;border-radius:4px;background:rgba(79,196,134,.25);border:1px solid rgba(79,196,134,.6);animation:scnfade .6s .2s both}
+.scn-q,.scn-t{position:absolute;top:50%;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%);white-space:nowrap}
+.scn-q{bottom:14px;top:auto;color:var(--dm)}
+.scn-q em,.scn-t em{font-style:normal;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.scn-q b{font-size:16px;color:#c9d4e6}
+.scn-q::after{content:"";width:2px;height:12px;background:var(--dm);margin-top:4px}
+.scn-t{top:-4px;color:#4fc486;animation:scndrop .8s .7s cubic-bezier(.3,1.4,.5,1) both}
+.scn-t::before{content:"";width:18px;height:18px;border-radius:50%;background:#4fc486;box-shadow:0 0 0 6px rgba(79,196,134,.2);margin-bottom:8px}
+.scn-t b{font-size:26px;line-height:30px;color:#4fc486}
+@keyframes scndrop{0%{transform:translate(-50%,-60px);opacity:0}100%{transform:translate(-50%,0);opacity:1}}
+.scn-axis{display:flex;justify-content:space-between;margin-top:86px;font-size:11px;color:var(--dm)}
+/* 4 act: RFQ → negotiated → PO, ticked off in order */
+.scn-act{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:30px 0}
+.scn-line{position:absolute;left:16%;right:16%;top:58px;height:2px;background:var(--dline)}
+.scn-line span{display:block;height:100%;background:var(--cyan2);transform-origin:0 50%;animation:scngrow 1.6s .3s linear both}
+.scn-node{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;font-weight:600;animation:scnfade .5s both}
+.scn-node>.ms:first-child{width:56px;height:56px;border-radius:14px;background:var(--ink);border:1px solid var(--dline);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--cyan2)}
+.scn-ok{position:absolute;top:-6px;right:calc(50% - 38px);width:22px;height:22px;border-radius:50%;background:#4fc486;color:var(--ink);font-size:15px !important;display:flex;align-items:center;justify-content:center;font-style:normal;animation:scnpop .4s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes scnpop{from{transform:scale(0)}to{transform:scale(1)}}
+/* 5 save: the price drops, two value badges pop */
+.scn-save{display:flex;flex-direction:column;gap:16px}
+.scn-cmp{display:grid;grid-template-columns:60px minmax(0,1fr) 84px;gap:12px;align-items:center}
+.scn-cmp>span:first-child{color:var(--dm)}
+.scn-cmp b{text-align:right;font-size:18px;color:#c9d4e6}
+.scn-cmp b.price{color:#4fc486}
+.scn-tr.scn-tr-big{height:20px;border-radius:4px}
+.scn-tr .was{width:100%;background:#7f8ea8;animation:scngrow .6s var(--ease) both}
+.scn-tr .now{width:100%;background:#4fc486;animation:scnshrink 1.2s .5s var(--ease) both}
+@keyframes scnshrink{from{width:100%;background:#7f8ea8}to{width:var(--w);background:#4fc486}}
+.scn-badges{display:flex;gap:10px;margin-top:6px}
+.scn-badges span{padding:6px 12px;border-radius:9999px;font-size:13px;font-weight:700;animation:scnpop .4s cubic-bezier(.3,1.6,.5,1) both}
+.scn-badges .price{background:#4fc486;color:var(--ink);animation-delay:1.5s}
+.scn-badges .time{background:var(--cyan2);color:var(--ink);animation-delay:1.75s}
+.armed:not(.seen-platform) .stp *{animation-play-state:paused}
+@media (max-width:1024px){.stp-panel{grid-template-columns:minmax(0,1fr);gap:20px}.stp-t{font-size:34px;line-height:40px}}
+@media (max-width:600px){.stp-i .ms{width:40px;height:40px;font-size:19px}.stp-row::before,.stp-row::after{top:19px}.stp-n{font-size:12px}.stp-panel{padding:18px}.scn-src{font-size:12px;padding:5px 9px}.scn-data{transform:scale(.85)}.stp-p{font-size:16px;line-height:24px}}
+
+/* ---------- architecture: compact ---------- */
+#platform.sec{padding:80px 0}
+.stp-row{margin-bottom:18px}
+.stp-i .ms{width:42px;height:42px;font-size:20px}
+.stp-row::before,.stp-row::after{top:20px}
+.stp-n{font-size:14px}
+.stp-panel{grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:48px;padding:20px 32px;min-height:0}
+.stp-scene{min-height:180px}
+.scn-data{height:180px}
+.scn-data::before{inset:20px 50px}
+.scn-decide{padding-top:34px}
+.scn-axis{margin-top:70px}
+.scn-act{padding:18px 0}
+.scn-line{top:46px}
+.stp-t{font-size:36px;line-height:42px}
+.stp-p{font-size:17px;line-height:25px;margin-top:6px}
+.stp-bar{margin-top:16px}
+@media (max-width:1024px){.stp-panel{grid-template-columns:minmax(0,1fr);gap:12px;padding:18px}}
+@media (max-width:768px){#platform.sec{padding:64px 0}}
+.scn-hub{background:#fff;box-shadow:0 0 0 1px rgba(90,216,255,.5)}
+.scn-logo{width:32px;height:30px}
+@keyframes scnhub{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.1);opacity:1}100%{transform:scale(1);box-shadow:0 0 0 1px rgba(90,216,255,.5),0 0 0 10px rgba(90,216,255,.14)}}
+
+/* ---------- architecture: Genessence tile in every scene ---------- */
+.scn-lt{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;border-radius:12px;box-shadow:0 0 0 1px rgba(90,216,255,.5)}
+.scn-lt.sm{width:30px;height:30px;border-radius:8px}.scn-lt.sm .scn-logo{width:18px;height:17px}
+.scn-lt.md{width:46px;height:46px}.scn-lt.md .scn-logo{width:26px;height:24px}
+.scn-lt.lg{width:64px;height:64px;border-radius:16px}.scn-lt.lg .scn-logo{width:34px;height:32px}
+.scn-hub.scn-lt{position:absolute;left:50%;top:50%;margin:-32px 0 0 -32px}
+/* analyse */
+.scn-analyse{flex-direction:row;align-items:center;gap:18px}
+.scn-an-logo{animation:scnpulse 1.6s ease-in-out infinite}
+.scn-an-rows{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+@keyframes scnpulse{0%,100%{box-shadow:0 0 0 1px rgba(90,216,255,.5)}50%{box-shadow:0 0 0 1px rgba(90,216,255,.5),0 0 0 8px rgba(90,216,255,.15)}}
+/* decide: the tile replaces the dot */
+.scn-t::before{display:none}
+.scn-t .scn-lt{margin-bottom:6px;box-shadow:0 0 0 2px #4fc486,0 0 0 7px rgba(79,196,134,.2)}
+.scn-t{top:-12px}
+/* act: four columns, the tile leads */
+.scn-act{grid-template-columns:repeat(4,minmax(0,1fr))}
+.scn-line{left:12.5%;right:12.5%}
+.scn-node.lead{color:var(--cyan2)}
+.scn-node.lead .scn-lt{width:56px;height:56px;border-radius:14px}
+/* save: tile labels the after row */
+.scn-cmp .scn-lt.sm{justify-self:start}

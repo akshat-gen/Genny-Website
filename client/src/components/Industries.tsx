@@ -67,16 +67,6 @@ export default function Industries() {
             <line className="ac" x1="60" y1="15" x2="60" y2="55" strokeWidth="1" />
           </Industry>
         </div>
-        <div className="ent rv d3" data-rv="industries" style={{ marginTop: 32 }}>
-          <div className="ent-l">
-            <span className="ms" aria-hidden="true">verified_user</span>
-            <div>
-              <div className="ent-t">Enterprise Deployment Architecture</div>
-              <div className="cap" style={{ marginTop: 2 }}>SOC2 Type II Certified · SAML/SSO Okta Ready · Direct SAP ECC/S4HANA &amp; Oracle ERP Connectors</div>
-            </div>
-          </div>
-          <div className="tags"><span>SAP Certified</span><span>Oracle Partner</span></div>
-        </div>
       </div>
     </section>
   );
